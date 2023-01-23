@@ -17,17 +17,17 @@ const url = `https://api.helius.xyz/v1/nft-events?api-key=f86f69e3-6106-4e41-b84
 const getSales = async () => {
     const { data } = await axios.post(url, {
         query: {
-            sources: ["SOLSCAN"],
+            sources: ["MAGIC_EDEN"],
             types: ["NFT_SALE"],
             nftCollectionFilters: {
               // y00ts collection address
-              verifiedCollectionAddress: ["GNurDhLj2mDMzyDPrzMUrcc34PxkMrs2wHv8LkfitNuK"]
+              verifiedCollectionAddress: ["4mKSoDDqApmF1DqXvVTSL6tu2zixrSSNjqMxUnwvVzy2"]
             }
         }
     });
-    console.log("x-cube sales: ", data.result);
+    console.log("Magic Eden sales: ", data.result);
 };
-console.log("trying HELIUS query2")
+//console.log("trying HELIUS query2")
 getSales();
 
 describe("l2ob", () => {
