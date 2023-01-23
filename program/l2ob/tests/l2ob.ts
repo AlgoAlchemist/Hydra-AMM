@@ -5,6 +5,31 @@ import { Decimal, SDK } from "../SDK";
 import { L2ob } from "../target/types/l2ob";
 import { DummyBids } from "./MockData";
 
+
+console.log("trying HELIUS query")
+// Simple / direct price query using helius
+const axios = require('axios')
+
+//const api_key = "f86f69e3-6106-4e41-b849-25b7007aca57"
+// const url =
+const url = `https://api.helius.xyz/v1/nft-events?api-key=f86f69e3-6106-4e41-b849-25b7007aca57`;
+
+const getSales = async () => {
+    const { data } = await axios.post(url, {
+        query: {
+            sources: ["SOLSCAN"],
+            types: ["NFT_SALE"],
+            nftCollectionFilters: {
+              // y00ts collection address
+              verifiedCollectionAddress: ["GNurDhLj2mDMzyDPrzMUrcc34PxkMrs2wHv8LkfitNuK"]
+            }
+        }
+    });
+    console.log("x-cube sales: ", data.result);
+};
+console.log("trying HELIUS query2")
+getSales();
+
 describe("l2ob", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
