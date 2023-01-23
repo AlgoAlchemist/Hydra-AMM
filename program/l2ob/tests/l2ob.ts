@@ -25,10 +25,18 @@ const getSales = async () => {
             }
         }
     });
-    console.log("Magic Eden sales: ", data.result);
+    //console.log("Magic Eden sales: ", data.result);
+    console.log("last:", data.result.slice(-1));
+    const k = data.result.slice(-10);
+    return k;
 };
+
+
+
 //console.log("trying HELIUS query2")
 getSales();
+//console.log(recent);
+//console.log("last:", data.result.slice(-1).amount);
 
 describe("l2ob", () => {
   const provider = anchor.AnchorProvider.env();
@@ -125,6 +133,17 @@ describe("l2ob", () => {
     const sizeExponent = 0;
     const minimumPriceIncrement = 1;
     const priceExponent = 0;
+    const s = await getSales();
+    let Amts2 = [];
+    //let Amts = [];
+    for (let i = 0; i < s.length; i++) {
+      Amts2.push(s[i].amount);
+    }
+    let Amts3 = [];
+
+    s.forEach(function(item) {
+      Amts3.push({price: item.amount, size: 1});
+    });
 
     const { orderbook } = await sdk.initialize({
       admin: auth,
@@ -133,8 +152,13 @@ describe("l2ob", () => {
       minimumSizeIncrement: new Decimal(minimumSizeIncrement, sizeExponent),
       minimumPriceIncrement: new Decimal(minimumPriceIncrement, priceExponent),
     });
-
-    const bids = DummyBids;
+    let Amts = s.map(function(item) {
+      return [item.amount, 1];
+    });
+    //const asks = Amts;
+    const bids = Amts;
+    console.log("bids are:", bids);
+    //const bids = DummyBids;
     await sdk.updateBids({
       orderbook,
       bids,
@@ -167,8 +191,21 @@ describe("l2ob", () => {
       minimumSizeIncrement: new Decimal(minimumSizeIncrement, sizeExponent),
       minimumPriceIncrement: new Decimal(minimumPriceIncrement, priceExponent),
     });
+    const s = await getSales();
+    let Amts2 = [];
+    //let Amts = [];
+    for (let i = 0; i < s.length; i++) {
+      Amts2.push(s[i].amount);
+    }
+    let Amts3 = [];
 
-    const asks = DummyBids;
+    s.forEach(function(item) {
+      Amts3.push({price: item.amount, size: 1});
+    });
+    let Amts = s.map(function(item) {
+      return [item.amount, 1];
+    });
+    const asks = Amts;
     await sdk.updateAsks({
       orderbook,
       asks,
@@ -193,7 +230,21 @@ describe("l2ob", () => {
     const sizeExponent = 0;
     const minimumPriceIncrement = 1;
     const priceExponent = 0;
+    const s = await getSales();
+    let Amts2 = [];
+    //let Amts = [];
+    for (let i = 0; i < s.length; i++) {
+      Amts2.push(s[i].amount);
+    }
+    let Amts3 = [];
 
+    s.forEach(function(item) {
+      Amts3.push({price: item.amount, size: 1});
+    });
+    let Amts = s.map(function(item) {
+      return [item.amount, 1];
+    });
+    const asks = Amts;
     const { orderbook } = await sdk.initialize({
       admin: auth,
       base,
@@ -202,8 +253,8 @@ describe("l2ob", () => {
       minimumPriceIncrement: new Decimal(minimumPriceIncrement, priceExponent),
     });
 
-    const bids = DummyBids;
-    const asks = DummyBids;
+    const bids = Amts;
+    //const asks = Amts;
     await sdk.updateBids({
       orderbook,
       bids,
